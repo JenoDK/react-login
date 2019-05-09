@@ -1,4 +1,5 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and largely base on this [tutorial](https://serverless-stack.com/#table-of-contents)
+Some extra stuff has been added like for example OAuth
 
 ## Available Scripts
 
