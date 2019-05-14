@@ -1,0 +1,85 @@
+{
+    "identityPoolName": "cognitoe50fbcb2_identitypool_e50fbcb2",
+    "allowUnauthenticatedIdentities": false,
+    "lambdaLogPolicy": "cognitoe50fbcb2_lambda_log_policy",
+    "openIdLambdaRoleName": "cognitoe50fbcb2_openid_lambda_role",
+    "openIdRolePolicy": "cognitoe50fbcb2_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "cognitoe50fbcb2_openid_lambda_iam_policy",
+    "openIdLogPolicy": "cognitoe50fbcb2_openid_lambda_log_policy",
+    "userPoolName": "cognitoe50fbcb2_userpool_e50fbcb2",
+    "autoVerifiedAttributes": [
+        "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "roleName": "cognitoe50fbcb2_sns-role",
+    "roleExternalId": "cognitoe50fbcb2_role_external_id",
+    "policyName": "cognitoe50fbcb2-sns-policy",
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [
+        "Requires Lowercase",
+        "Requires Uppercase",
+        "Requires Numbers",
+        "Requires Symbols"
+    ],
+    "requiredAttributes": [
+        "email"
+    ],
+    "userpoolClientName": "cognitoe50fbcb2_app_client",
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+        "email"
+    ],
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "mfaLambdaRole": "cognitoe50fbcb2_totp_lambda_role",
+    "mfaLambdaLogPolicy": "cognitoe50fbcb2_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "cognitoe50fbcb2_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "cognitoe50fbcb2_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "cognitoe50fbcb2_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "cognitoe50fbcb2_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "cognitoe50fbcb2_userpoolclient_lambda_iam_policy",
+    "userpoolClientSetAttributes": false,
+    "resourceName": "cognitoe50fbcb2",
+    "authSelections": "identityPoolAndUserPool",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "unauthRoleArn": {
+        "Fn::GetAtt": [
+            "UnauthRole",
+            "Arn"
+        ]
+    },
+    "useDefault": "defaultSocial",
+    "hostedUI": true,
+    "usernameAttributes": [
+        "email"
+    ],
+    "hostedUIDomainName": "reactlogine50fbcb2-e50fbcb2",
+    "authProvidersUserPool": [
+        "Google"
+    ],
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
+    "addCallbackOnUpdate": false,
+    "addLogoutOnUpdate": false,
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/login/\"]}"
+}

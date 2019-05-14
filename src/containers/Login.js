@@ -1,9 +1,9 @@
 import { Auth } from "aws-amplify";
 import React, { Component } from "react";
 import { Form, FormControl, FormGroup } from "react-bootstrap";
-import "./Login.css";
+import GoogleButton from "react-google-button";
 import LoaderButton from "../components/LoaderButton";
-import OAuthButton from "../components/OAuthButton";
+import "./Login.scss";
 
 export default class Login extends Component {
     constructor(props) {
@@ -33,13 +33,18 @@ export default class Login extends Component {
 
         try {
             await Auth.signIn(this.state.email, this.state.password);
-            this.props.userHasAuthenticated(true);
-            this.props.history.push("/");
         } catch (e) {
-            alert(e.message);
+            console.log(e.message);
         }
     }
 
+    async googleLogin() {
+        try {
+            await Auth.federatedSignIn({ provider: 'Google' });
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
 
     render() {
         return (
@@ -71,7 +76,8 @@ export default class Login extends Component {
                         loadingText="Logging in…"
                     />
                 </form>
-                <OAuthButton />
+                <div style={{marginTop: '5px', marginBottom: '5px'}}>or</div>
+                <GoogleButton style={{marginLeft: 'auto', marginRight: 'auto'}} onClick={() => this.googleLogin()} />
             </div>
         );
     }

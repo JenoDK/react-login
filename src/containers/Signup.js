@@ -1,8 +1,8 @@
+import { Auth } from "aws-amplify";
 import React, { Component } from "react";
 import { Form } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
-import "./Signup.css";
-import { Auth } from "aws-amplify";
+import "./Signup.scss";
 
 export default class Signup extends Component {
     constructor(props) {
@@ -10,19 +10,47 @@ export default class Signup extends Component {
 
         this.state = {
             isLoading: false,
+            showErrors: false,
+            username: "",
+            error_username: "Please enter a username",
             email: "",
+            error_email: "Please enter a valid e-mail adress",
             password: "",
+            error_password: "Password needs to be min 8 characters and contain uppercase, lowercase letters and numbers",
             confirmPassword: "",
+            error_confirmPassword: "Needs to be the same as Password",
             confirmationCode: "",
-            newUser: null
+            error_awsCognito: "",
+            newUser: null,
         };
     }
 
     validateForm() {
         return (
-            this.state.email.length > 0 &&
-            this.state.password.length > 0 &&
+            this.state.username.length > 0 &&
+            this.validateEmail() &&
+            this.validatePassword() &&
+            this.validateConfirmPassword()
+        );
+    }
+
+    validatePassword() {
+        var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+        return (
+            this.state.password.length > 0 && re.test(this.state.password)
+        );
+    }
+
+    validateConfirmPassword() {
+        return (
             this.state.password === this.state.confirmPassword
+        );
+    }
+
+    validateEmail() {
+        var re = /\S+@\S+\.\S+/;
+        return (
+            this.state.email.length > 0 && re.test(this.state.email)
         );
     }
 
@@ -38,22 +66,29 @@ export default class Signup extends Component {
 
     handleSubmit = async event => {
         event.preventDefault();
+        this.setState({ showErrors: true });
+        if (this.validateForm()) {
 
-        this.setState({ isLoading: true });
+            this.setState({ isLoading: true });
 
-        try {
-            const newUser = await Auth.signUp({
-                username: this.state.email,
-                password: this.state.password
-            });
-            this.setState({
-                newUser
-            });
-        } catch (e) {
-            alert(e.message);
+            try {
+                const newUser = await Auth.signUp({
+                    username: this.state.username,
+                    password: this.state.password,
+                    attributes: {
+                        email: this.state.email,
+                    }
+                });
+                this.setState({
+                    newUser
+                });
+            } catch (e) {
+                alert(e.message);
+                console.log(e);
+            }
+
+            this.setState({ isLoading: false });
         }
-
-        this.setState({ isLoading: false });
     }
 
     handleConfirmationSubmit = async event => {
@@ -101,6 +136,19 @@ export default class Signup extends Component {
     renderForm() {
         return (
             <form onSubmit={this.handleSubmit}>
+                <Form.Group controlId="username">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                        autoFocus
+                        type="text"
+                        value={this.state.username}
+                        onChange={this.handleChange}
+                        isInvalid={this.state.showErrors && !this.validatePassword()}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {this.state.error_username}
+                    </Form.Control.Feedback>
+                </Form.Group>
                 <Form.Group controlId="email">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
@@ -108,7 +156,11 @@ export default class Signup extends Component {
                         type="email"
                         value={this.state.email}
                         onChange={this.handleChange}
+                        isInvalid={this.state.showErrors && !this.validateEmail()}
                     />
+                    <Form.Control.Feedback type="invalid">
+                        {this.state.error_email}
+                    </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="password">
                     <Form.Label>Password</Form.Label>
@@ -116,7 +168,11 @@ export default class Signup extends Component {
                         value={this.state.password}
                         onChange={this.handleChange}
                         type="password"
+                        isInvalid={this.state.showErrors && !this.validatePassword()}
                     />
+                    <Form.Control.Feedback type="invalid">
+                        {this.state.error_password}
+                    </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="confirmPassword">
                     <Form.Label>Confirm Password</Form.Label>
@@ -124,11 +180,14 @@ export default class Signup extends Component {
                         value={this.state.confirmPassword}
                         onChange={this.handleChange}
                         type="password"
+                        isInvalid={this.state.showErrors && !this.validateConfirmPassword()}
                     />
+                    <Form.Control.Feedback type="invalid">
+                        {this.state.error_confirmPassword}
+                    </Form.Control.Feedback>
                 </Form.Group>
                 <LoaderButton
                     block
-                    disabled={!this.validateForm()}
                     type="submit"
                     isLoading={this.state.isLoading}
                     text="Signup"

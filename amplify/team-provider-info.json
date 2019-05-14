@@ -1,0 +1,21 @@
+{
+    "jeno": {
+        "awscloudformation": {
+            "AuthRoleName": "react-login-jeno-20190509140444-authRole",
+            "UnauthRoleArn": "arn:aws:iam::166296735114:role/react-login-jeno-20190509140444-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::166296735114:role/react-login-jeno-20190509140444-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "react-login-jeno-20190509140444-deployment",
+            "UnauthRoleName": "react-login-jeno-20190509140444-unauthRole",
+            "StackName": "react-login-jeno-20190509140444",
+            "StackId": "arn:aws:cloudformation:us-east-2:166296735114:stack/react-login-jeno-20190509140444/a26232a0-7252-11e9-ae16-02e473ddfb1a"
+        },
+        "categories": {
+            "auth": {
+                "cognitoe50fbcb2": {
+                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"534325369877-7kr3hd5br482k4g89lcsfs9r0a4hvkvp.apps.googleusercontent.com\",\"client_secret\":\"hcIVWLfpYQsbNBtsXUszdQZz\"}]"
+                }
+            }
+        }
+    }
+}
