@@ -14,19 +14,24 @@ export interface ResetPasswordState {
     confirmPassword: string;
     isConfirming: boolean;
     isSendingCode: boolean;
+    aws_error?: string;
 }
 
 export default class ResetPassword extends Component<{}, ResetPasswordState> {
-    state: ResetPasswordState = {
-        code: "",
-        email: "",
-        password: "",
-        codeSent: false,
-        confirmed: false,
-        confirmPassword: "",
-        isConfirming: false,
-        isSendingCode: false
-    };
+    constructor(props: {}) {
+        super(props);
+
+        this.state = {
+            code: "",
+            email: "",
+            password: "",
+            codeSent: false,
+            confirmed: false,
+            confirmPassword: "",
+            isConfirming: false,
+            isSendingCode: false,
+        };
+    }
 
     validateCodeForm() {
         return this.state.email.length > 0;
@@ -161,6 +166,14 @@ export default class ResetPassword extends Component<{}, ResetPasswordState> {
         );
     }
 
+    renderAwsError() {
+        return (
+            <Alert variant="danger" className="center-card" style={{ marginTop: '10px' }} >
+                {this.state.aws_error}
+            </Alert>
+        );
+    }
+
     renderSuccessMessage() {
         return (
             <Card className="center-card" >
@@ -183,6 +196,7 @@ export default class ResetPassword extends Component<{}, ResetPasswordState> {
                     : !this.state.confirmed
                         ? this.renderConfirmationForm()
                         : this.renderSuccessMessage()}
+                {this.state.aws_error && this.renderAwsError()}
             </div>
         );
     }

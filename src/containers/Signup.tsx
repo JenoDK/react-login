@@ -1,7 +1,7 @@
 import { ISignUpResult } from "amazon-cognito-identity-js";
 import { Auth } from "aws-amplify";
 import React, { Component } from "react";
-import { Form, FormControlProps, Card } from "react-bootstrap";
+import { Form, FormControlProps, Card, Alert } from "react-bootstrap";
 import { RouteComponentProps } from "react-router";
 import LoaderButton from "../components/LoaderButton";
 import "./Cards.scss";
@@ -43,7 +43,6 @@ export default class Signup extends Component<RouteComponentProps<any>, MainStat
                 error_email: "Please enter a valid e-mail adress",
                 error_password: "Password needs to be min 8 characters and contain atleast one uppercase and lowercase letter and one number",
                 error_confirmPassword: "Needs to be the same as password",
-                error_awsCognito: ""
             },
             formState: {}
         };
@@ -114,8 +113,8 @@ export default class Signup extends Component<RouteComponentProps<any>, MainStat
                     newUser
                 });
             } catch (e) {
-                alert(e.message);
-                console.log(e);
+                console.error(e.message);
+                this.setState({ errors: { ...this.state.errors, error_awsCognito: e.message } })
             }
 
             this.setState({ isLoading: false });
@@ -140,6 +139,7 @@ export default class Signup extends Component<RouteComponentProps<any>, MainStat
         } catch (e) {
             console.error(e.message);
             this.setState({ isLoading: false });
+            this.setState({ errors: { ...this.state.errors, error_awsCognito: e.message } })
         }
     }
 
@@ -163,6 +163,14 @@ export default class Signup extends Component<RouteComponentProps<any>, MainStat
                     loadingText="Verifying…"
                 />
             </form>
+        );
+    }
+
+    renderAwsError() {
+        return (
+            <Alert variant="danger" className="center-card" style={{ marginTop: '10px' }} >
+                {this.state.errors.error_awsCognito}
+            </Alert>
         );
     }
 
@@ -245,6 +253,7 @@ export default class Signup extends Component<RouteComponentProps<any>, MainStat
                 {this.state.newUser
                     ? this.renderConfirmationForm()
                     : this.renderForm()}
+                {this.state.errors.error_awsCognito && this.renderAwsError()}
             </div>
         );
     }
