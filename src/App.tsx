@@ -2,13 +2,27 @@ import { Auth, Hub } from "aws-amplify";
 import React, { Component, Fragment } from "react";
 import { Nav, Navbar, Spinner } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import "./App.scss";
 import Routes from "./Routes";
 
-class App extends Component {
+export interface State {
+    authState: string;
+    authData?: any;
+    authError?: any;
+}
 
-    constructor(props) {
+export interface ChildProperties {
+    appState: State;
+    isLoading: boolean;
+    isSignedIn: boolean;
+    isSignIn: boolean;
+    setAuthState: (v: string) => any;
+}
+
+class App extends Component<RouteComponentProps<any>, State> {
+
+    constructor(props: RouteComponentProps<any>) {
         super(props);
 
         this.signOut = this.signOut.bind(this);
@@ -51,20 +65,18 @@ class App extends Component {
         this.props.history.push("/login");
     }
 
-    checkAuthState = (authState) => {
-        return this.state.authState === authState;
+    checkAuthState = (authStateToCheck: string) => {
+        return this.state.authState === authStateToCheck;
     }
 
-    setAuthState = stateValue => {
+    setAuthState = (stateValue: string) => {
         this.setState({ authState: stateValue });
     }
 
     render() {
 
-        const childProps = {
-            authState: this.state.authState,
-            authData: this.state.authData,
-            authError: this.state.authError,
+        const childProps: ChildProperties = {
+            appState: this.state,
             isLoading: this.checkAuthState('loading'),
             isSignedIn: this.checkAuthState('signedIn'),
             isSignIn: this.checkAuthState('signIn'),
@@ -89,11 +101,8 @@ class App extends Component {
                                 {childProps.isSignedIn
                                     ? <Nav.Link onClick={this.signOut}>Logout</Nav.Link>
                                     : <Fragment>
-                                        <LinkContainer to="/signup">
-                                            <Nav.Link href="#">Signup</Nav.Link>
-                                        </LinkContainer>
                                         <LinkContainer to="/login">
-                                            <Nav.Link href="#">Login</Nav.Link>
+                                            <Nav.Link href="#">Sign in</Nav.Link>
                                         </LinkContainer>
                                     </Fragment>
                                 }

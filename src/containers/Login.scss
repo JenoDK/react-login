@@ -1,9 +1,20 @@
 @media all and (min-width: 480px) {
     .Login {
-        padding: 60px 0;
-        form {
+        margin-top: 60px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+.Login {
+    .text-inBorder {
+        border-bottom: 1px solid rgba(0,0,0,.125);
+        p {
+            text-align: center;
             margin: 0 auto;
-            max-width: 320px;
+            width: 50px;
+            margin-bottom: -12px;
+            background-color: #FFF;
         }
     }
 }

@@ -3,6 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/bootstrap": "^4.3.0",
+    "@types/jest": "^24.0.13",
+    "@types/node": "^12.0.1",
+    "@types/node-sass": "^4.11.0",
+    "@types/react": "^16.8.17",
+    "@types/react-bootstrap": "^0.32.17",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-router-bootstrap": "^0.24.5",
+    "@types/react-router-dom": "^4.3.3",
     "aws-amplify": "^1.1.26",
     "aws-amplify-react": "^2.3.7",
     "bootstrap": "^4.3.1",
@@ -12,7 +21,8 @@
     "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",
     "react-google-button": "^0.5.3",
-    "react-scripts": "3.0.0"
+    "react-scripts": "^3.0.0",
+    "typescript": "^3.4.5"
   },
   "scripts": {
     "start": "react-scripts start",
