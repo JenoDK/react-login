@@ -6,6 +6,7 @@ import GoogleButton from "react-google-button";
 import { Link } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
 import "./Login.scss";
+import "./Cards.scss";
 
 export interface State {
     isLoading: boolean;
@@ -60,50 +61,48 @@ export default class Login extends Component<{}, State> {
 
     render() {
         return (
-            <div>
-                <Card className="Login" style={{ width: '25rem' }}>
-                    <Card.Header as="h5">Sign in to your account</Card.Header>
-                    <Card.Body>
-                        <form onSubmit={this.handleSubmit}>
-                            <FormGroup controlId="email">
-                                <Form.Label>Email</Form.Label>
-                                <FormControl
-                                    autoFocus
-                                    placeholder="e-mail adress"
-                                    type="email"
-                                    value={this.state.email}
-                                    onChange={this.handleChange}
-                                />
-                            </FormGroup>
-                            <FormGroup controlId="password">
-                                <Form.Label>Password</Form.Label>
-                                <FormControl
-                                    placeholder="password"
-                                    value={this.state.password}
-                                    onChange={this.handleChange}
-                                    type="password"
-                                />
-                                <Form.Text className="text-muted">
-                                    Forgot your password? <Link to="/forgotPassword">Reset password</Link>
-                                </Form.Text>
-                            </FormGroup>
-                            <Form.Text className="text-body" style={{ fontSize: '100%' }}>
-                                No account? <Link to="/signup">Sign up</Link>
-                            </Form.Text>
-                            <LoaderButton
-                                disabled={!this.validateForm()}
-                                isLoading={this.state.isLoading}
-                                text="Login"
-                                loadingText="Logging in…"
+            <Card className="center-card" style={{ width: '25rem' }}>
+                <Card.Header as="h5">Sign in to your account</Card.Header>
+                <Card.Body>
+                    <form onSubmit={this.handleSubmit}>
+                        <FormGroup controlId="email">
+                            <Form.Label>Email</Form.Label>
+                            <FormControl
+                                autoFocus
+                                placeholder="e-mail adress"
+                                type="email"
+                                value={this.state.email}
+                                onChange={this.handleChange}
                             />
-                        </form>
-                    </Card.Body>
-                    <div className="text-uppercase text-muted text-inBorder"><p>or</p></div>
-                    <Card.Body>
-                        <GoogleButton style={{ marginLeft: 'auto', marginRight: 'auto' }} onClick={() => this.googleLogin()} />
-                    </Card.Body>
-                </Card>
-            </div>
+                        </FormGroup>
+                        <FormGroup controlId="password">
+                            <Form.Label>Password</Form.Label>
+                            <FormControl
+                                placeholder="password"
+                                value={this.state.password}
+                                onChange={this.handleChange}
+                                type="password"
+                            />
+                            <Form.Text className="text-muted">
+                                Forgot your password? <Link to="/login/reset">Reset password</Link>
+                            </Form.Text>
+                        </FormGroup>
+                        <Form.Text className="text-muted" style={{ fontSize: '100%' }}>
+                            No account? <Link to="/signup">Sign up</Link>
+                        </Form.Text>
+                        <LoaderButton
+                            disabled={!this.validateForm()}
+                            isLoading={this.state.isLoading}
+                            text="Login"
+                            loadingText="Logging in…"
+                        />
+                    </form>
+                </Card.Body>
+                <div className="text-uppercase text-muted text-inBorder"><p>or</p></div>
+                <Card.Body>
+                    <GoogleButton style={{ marginLeft: 'auto', marginRight: 'auto' }} onClick={() => this.googleLogin()} />
+                </Card.Body>
+            </Card>
         ); 
     }
 }

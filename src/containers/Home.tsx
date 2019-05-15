@@ -7,8 +7,8 @@ export default class Home extends Component {
         return (
             <Jumbotron fluid className="Home">
                 <Container className="lander">
-                    <h1>Scratch</h1>
-                    <p>A simple note taking app</p>
+                    <h1>My App</h1>
+                    <p>My custom app</p>
                 </Container>
             </Jumbotron>
         );

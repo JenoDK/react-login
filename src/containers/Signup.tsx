@@ -1,10 +1,11 @@
 import { ISignUpResult } from "amazon-cognito-identity-js";
 import { Auth } from "aws-amplify";
 import React, { Component } from "react";
-import { Form, FormControlProps } from "react-bootstrap";
+import { Form, FormControlProps, Card } from "react-bootstrap";
 import { RouteComponentProps } from "react-router";
 import LoaderButton from "../components/LoaderButton";
-import "./Signup.scss";
+import "./Cards.scss";
+import { Link } from 'react-router-dom';
 
 export interface MainState {
     isLoading: boolean;
@@ -40,8 +41,8 @@ export default class Signup extends Component<RouteComponentProps<any>, MainStat
             errors: {
                 error_username: "Please enter a username",
                 error_email: "Please enter a valid e-mail adress",
-                error_password: "Password needs to be min 8 characters and contain uppercase, lowercase letters and numbers",
-                error_confirmPassword: "Needs to be the same as Password",
+                error_password: "Password needs to be min 8 characters and contain atleast one uppercase and lowercase letter and one number",
+                error_confirmPassword: "Needs to be the same as password",
                 error_awsCognito: ""
             },
             formState: {}
@@ -167,66 +168,74 @@ export default class Signup extends Component<RouteComponentProps<any>, MainStat
 
     renderForm() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <Form.Group controlId="username">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        type="text"
-                        onChange={this.handleChange}
-                        isValid={this.state.showErrors && this.validateUsername()}
-                        isInvalid={this.state.showErrors && !this.validateUsername()}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {this.state.errors.error_username}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group controlId="email">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        type="email"
-                        onChange={this.handleChange}
-                        isValid={this.state.showErrors && this.validateEmail()}
-                        isInvalid={this.state.showErrors && !this.validateEmail()}
-                    />
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text>
-                    <Form.Control.Feedback type="invalid">
-                        {this.state.errors.error_email}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group controlId="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        onChange={this.handleChange}
-                        type="password"
-                        isValid={this.state.showErrors && this.validatePassword()}
-                        isInvalid={this.state.showErrors && !this.validatePassword()}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {this.state.errors.error_password}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group controlId="confirmPassword">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control
-                        onChange={this.handleChange}
-                        type="password"
-                        isValid={this.state.showErrors && this.validateConfirmPassword()}
-                        isInvalid={this.state.showErrors && !this.validateConfirmPassword()}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {this.state.errors.error_confirmPassword}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <LoaderButton
-                    isLoading={this.state.isLoading}
-                    text="Signup"
-                    loadingText="Signing up…"
-                />
-            </form>
+            <Card className="center-card" >
+                <Card.Header as="h5">Sign up</Card.Header>
+                <Card.Body>
+                    <form onSubmit={this.handleSubmit}>
+                        <Form.Group controlId="username">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control
+                                autoFocus
+                                type="text"
+                                onChange={this.handleChange}
+                                isValid={this.state.showErrors && this.validateUsername()}
+                                isInvalid={this.state.showErrors && !this.validateUsername()}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {this.state.errors.error_username}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group controlId="email">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                autoFocus
+                                type="email"
+                                onChange={this.handleChange}
+                                isValid={this.state.showErrors && this.validateEmail()}
+                                isInvalid={this.state.showErrors && !this.validateEmail()}
+                            />
+                            <Form.Text className="text-muted">
+                                We'll never share your email with anyone else.
+                            </Form.Text>
+                            <Form.Control.Feedback type="invalid">
+                                {this.state.errors.error_email}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group controlId="password">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control
+                                onChange={this.handleChange}
+                                type="password"
+                                isValid={this.state.showErrors && this.validatePassword()}
+                                isInvalid={this.state.showErrors && !this.validatePassword()}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {this.state.errors.error_password}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group controlId="confirmPassword">
+                            <Form.Label>Confirm Password</Form.Label>
+                            <Form.Control
+                                onChange={this.handleChange}
+                                type="password"
+                                isValid={this.state.showErrors && this.validateConfirmPassword()}
+                                isInvalid={this.state.showErrors && !this.validateConfirmPassword()}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {this.state.errors.error_confirmPassword}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Text className="text-muted" style={{ fontSize: '100%' }}>
+                            Already have an account? <Link to="/login">Sign in</Link>
+                        </Form.Text>
+                        <LoaderButton
+                            isLoading={this.state.isLoading}
+                            text="Signup"
+                            loadingText="Signing up…"
+                        />
+                    </form>
+                </Card.Body>
+            </Card>
         );
     }
 

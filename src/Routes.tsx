@@ -4,11 +4,13 @@ import Home from "./containers/Home";
 import Login from "./containers/Login";
 import NotFound from "./containers/NotFound";
 import Signup from './containers/Signup';
+import ResetPassword from "./containers/ResetPassword";
 
 export default ({...childProps}) =>
     <Switch>
         <Route path="/" exact render={props => <Home {...childProps} {...props}/>} />
         <Route path="/login" exact render={props => <Login {...childProps} {...props}/>} />
+        <Route path="/login/reset" exact render={props => <ResetPassword {...childProps} {...props}/>} />
         <Route path="/signup" exact render={props => <Signup {...childProps} {...props}/>} />
         { /* Finally, catch all unmatched routes */}
         <Route component={NotFound} />
